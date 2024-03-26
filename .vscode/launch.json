@@ -10,6 +10,13 @@
       "request": "launch",
       "program": "game.py",
       "console": "integratedTerminal"
+    },
+    {
+      "name": "Run level editor",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "editor.py",
+      "console": "integratedTerminal"
     }
   ]
 }
