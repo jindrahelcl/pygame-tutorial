@@ -1,3 +1,4 @@
+import os
 import sys
 import pygame
 
@@ -36,8 +37,11 @@ class Game:
       "player/wall_slide": Animation(load_images("entities/player/wall_slide")),
     }
 
-    self.player = Player(self, (50, 50), (8, 15))
+    self.player = Player(self, (100, 100), (8, 15))
     self.tilemap = Tilemap(self, tile_size=16)
+
+    if os.path.exists("map.json"):
+      self.tilemap.load("map.json")
     self.clouds = Clouds(self.assets["clouds"], count=16)
 
     self.scroll = [0, 0]

@@ -3,6 +3,25 @@ import json
 
 NEIGHBOR_OFFSETS = [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (0, 0), (-1, 1), (0, 1), (1, 1)]
 PHYSICS_TILES = {"grass", "stone"}
+AUTOTILE_TYPES = {"grass", "stone"}
+AUTOTILE_MAP = [ # stored as bitmap: there is something on the top/right/bottom/left.
+  1, # nothing
+  2, # left
+  1, # bottom
+  2, # bottom left
+  0, # right
+  1, # right left
+  0, # right bottom
+  1, # right bottom left
+  8, # top
+  4, # top left
+  5, # top bottom
+  3, # top bottom left
+  6, # top right
+  8, # top right left
+  7, # top right bottom
+  5, # top right bottom left
+]
 
 class Tilemap:
   def __init__(self, game, tile_size=16):
@@ -64,3 +83,18 @@ class Tilemap:
       self.tilemap = obj["tilemap"]
       self.tile_size = obj["tile_size"]
       self.offgrid_tiles = obj["offgrid"]
+
+  def autotile(self):
+    for loc in self.tilemap:
+      tile = self.tilemap[loc]
+      if tile["type"] not in AUTOTILE_TYPES:
+        continue
+
+      variant = 0
+      for i, shift in enumerate([(-1, 0), (0, 1), (1, 0), (0, -1)]):
+        check_loc = str(tile["pos"][0] + shift[0]) + ";" + str(tile["pos"][1] + shift[1])
+        if check_loc in self.tilemap:
+          if self.tilemap[check_loc]["type"] == tile["type"]:
+            variant += 2 ** i
+
+      tile["variant"] = AUTOTILE_MAP[variant]

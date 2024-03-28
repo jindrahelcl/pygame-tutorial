@@ -107,6 +107,8 @@ class Editor:
             self.ongrid = not self.ongrid
           if event.key == pygame.K_o:
             self.tilemap.save("map.json")
+          if event.key == pygame.K_t:
+            self.tilemap.autotile()
 
         if event.type == pygame.KEYUP:
           if event.key == pygame.K_a:
@@ -150,9 +152,6 @@ class Editor:
             self.clicking = False
           if event.button == 3:
             self.right_clicking = False
-
-
-
 
 
       self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))
