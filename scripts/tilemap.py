@@ -1,4 +1,5 @@
 import pygame
+import json
 
 NEIGHBOR_OFFSETS = [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (0, 0), (-1, 1), (0, 1), (1, 1)]
 PHYSICS_TILES = {"grass", "stone"}
@@ -51,4 +52,15 @@ class Tilemap:
                  (tile["pos"][0] * self.tile_size - offset[0],
                   tile["pos"][1] * self.tile_size - offset[1]))  # because tile coords are in grid, not in pixels
 
+  def save(self, path):
+    with open(path, "w") as f:
+      json.dump({"tilemap": self.tilemap,
+                "tile_size": self.tile_size,
+                "offgrid": self.offgrid_tiles}, f, indent=2)
 
+  def load(self, path):
+    with open(path, "r") as f:
+      obj = json.load(f)
+      self.tilemap = obj["tilemap"]
+      self.tile_size = obj["tile_size"]
+      self.offgrid_tiles = obj["offgrid"]
