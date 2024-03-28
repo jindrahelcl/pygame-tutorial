@@ -9,14 +9,15 @@
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/game.py",
-      "cwd": "${fileDirname}",
+      "cwd": "${workspaceFolder}",
       "console": "integratedTerminal"
     },
     {
       "name": "Run level editor",
       "type": "debugpy",
       "request": "launch",
-      "program": "editor.py",
+      "program": "${workspaceFolder}/editor.py",
+      "cwd": "${workspaceFolder}",
       "console": "integratedTerminal"
     }
   ]
